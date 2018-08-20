@@ -1,0 +1,53 @@
+body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    text-align: center;
+    
+  }
+  
+  button {
+    display: inline-block;
+    vertical-align: middle;
+    width: 150px;
+    height: 50px;
+    border: none;
+    padding: 10px;
+    margin: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    border-radius: 20px;
+    outline: none;
+    background-color: lightblue;
+  }
+  .player-buttons:hover {
+    transform:scale(1.1);
+    background-color: #74CE8A;
+  }
+  
+  .output-div {
+    margin: 0 auto;
+    width: 550px;
+    height: 20px;
+  }
+  
+  .results-box {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: middle;
+    width: 450px;
+    height: 60px;
+    border: none;
+    padding: 10px;
+    margin: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    border-radius: 20px;
+    outline: none;
+    background-color: lightgrey;
+  }
+  .new-game-button {
+    background-color: green;
+    color: white;
+  }
