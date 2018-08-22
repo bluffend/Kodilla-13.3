@@ -10,7 +10,7 @@ function startGame() {
     var playerPoints = 0;
     var computerPoints = 0;
 
-    disableButtons();
+    disableButtons(true);
     infoPressNewGame ();
 
     // przypisanie akcji do przycisków - paper rock scissors newgame
@@ -90,14 +90,10 @@ function startGame() {
         var leftToWin = 0;
         results.innerHTML= 'PLAYER POINTS:  ' + playerPoints + ' ----- ' + ' COMPUTER POINTS: ' + computerPoints;
         if (computerPoints === numberOfRounds){
-            results.insertAdjacentHTML('beforeend','<br><br>'+ '<span style="color:#FF0000">COMPUTER WINS THE GAME! ');
-            disableButtons();
-            setTimeout(infoPressNewGame, 2000);
+            displayGameWinner('COMPUTER WINS THE GAME !');
         }
         else if (playerPoints === numberOfRounds) {
-            results.insertAdjacentHTML('beforeend','<br><br>'+ '<span style="color:#FF0000">YOU WIN THE GAME! ');
-            disableButtons();
-            setTimeout(infoPressNewGame, 2000);
+            displayGameWinner('YOU WIN THE GAME !');
         }
         else {
             leftToWin = numberOfRounds - playerPoints;
@@ -108,7 +104,7 @@ function startGame() {
     
     function runNewGame() {
         
-        enableButtons();
+        disableButtons(false);
         
         computerPoints = 0;
         playerPoints = 0;
@@ -118,18 +114,18 @@ function startGame() {
         numberOfRounds = parseInt(numberOfRounds);
         if (isNaN(numberOfRounds)) {
             results.innerHTML = '<br>This is not a number. Please type in a number.' + '<br><br>' + output.innerHTML;
-            disableButtons();
+            disableButtons(true);
             setTimeout(infoPressNewGame, 2000)
         }
         else if (numberOfRounds<1) {
             results.innerHTML = '<br>Please enter at least 1.';
-            disableButtons();
+            disableButtons(true);
             setTimeout(infoPressNewGame, 2000)
         }
         else if (numberOfRounds>20) {
             results.innerHTML = '<br>Are you serious you want to play ' + numberOfRounds + ' rounds ?';
             results.insertAdjacentHTML('beforeend','<br>'+ 'Please enter a smaller number');
-            disableButtons();
+            disableButtons(true);
             setTimeout(infoPressNewGame, 3000)
         }
         else {
@@ -138,25 +134,22 @@ function startGame() {
             pointCounter();
         }
     }
-    
-
-    function disableButtons() {
-        document.getElementsByClassName('player-buttons')[0].disabled = true;
-        document.getElementsByClassName('player-buttons')[1].disabled = true;
-        document.getElementsByClassName('player-buttons')[2].disabled = true;
-        
-    }
-    
-    function enableButtons() {
-        document.getElementsByClassName('player-buttons')[0].disabled = false;
-        document.getElementsByClassName('player-buttons')[1].disabled = false;
-        document.getElementsByClassName('player-buttons')[2].disabled = false;
+    function disableButtons(value) {
+        for (i = 0; i < 3; i++) {
+            document.getElementsByClassName('player-buttons')[i].disabled = value;
+        }
     }
 
     function infoPressNewGame (){
         clearBox(output);
         clearBox(results);
         results.insertAdjacentHTML('beforeend','<br>'+ '<b><span style="color:#FF0000">PRESS "NEW GAME" BUTTON');
+    }
+
+    function displayGameWinner (gamewinner) {
+        results.insertAdjacentHTML('beforeend','<br><br>'+ '<span style="color:#FF0000">'+ gamewinner);
+        disableButtons(true);
+        setTimeout(infoPressNewGame, 2000);
     }
 
 } // koniec funkcji startGame 
