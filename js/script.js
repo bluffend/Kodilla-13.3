@@ -41,10 +41,10 @@ function startGame() {
     // funkcja comprMove - losuje ruch komputera
     function computerMove() {
         var cMove = Math.floor(Math.random() * 3 + 1);
-        if (cMove == 1) {
+        if (cMove === 1) {
             cMove = 'PAPER';
         }
-        else if (cMove == 2) {
+        else if (cMove === 2) {
             cMove = 'ROCK';
         }
         else cMove = 'SCISSORS';
