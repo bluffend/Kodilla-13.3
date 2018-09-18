@@ -39,19 +39,22 @@ button {
   
 .output-div {
     margin: 0 auto;
-    width: 600px;
-    height: 30px;
+    width: 100%;
+    display: inline-block;
+    max-width: 600px;
+    max-height: 70px;
 }
   
 .results-box {
     display: inline-block;
-    vertical-align: middle;
+    size: 100%;
+    max-width: 450px;
+    max-height:460px;
+    vertical-align: middle; 
     text-align: middle;
-    width: 450px;
-    height: 60px;
     border: none;
-    padding: 10px;
-    margin: 20px;
+    padding: 10px 10px 20px 10px;
+    margin: 0px 20px;  
     font-size: 16px;
     font-weight: bold;
     color: #000;

@@ -2,27 +2,25 @@ startGame();
 
 // funkcja obsługująca całą grę
 function startGame() {
-    var paperButton = document.getElementById('paperButton');
-    var rockButton = document.getElementById('rockButton');
-    var scissorsButton = document.getElementById('scissorsButton');
     var newGame = document.getElementById('newGame');
-    var numberOfRounds = 0;
-    var playerPoints = 0;
-    var computerPoints = 0;
+    var params = {
+        numberOfRounds: 0,
+        playerPoints: 0,
+        computerPoints: 0,
+    };
 
     disableButtons(true);
-    infoPressNewGame ();
+    infoPressNewGame();
 
-    // przypisanie akcji do przycisków - paper rock scissors newgame
-    paperButton.addEventListener('click', function () {
-        playerMove('PAPER');
-    });
-    rockButton.addEventListener('click', function () {
-        playerMove('ROCK');
-    });
-    scissorsButton.addEventListener('click', function () {
-        playerMove('SCISSORS');
-    });
+    // przypisanie akcji do przycisków - paper rock scissors
+    var playerButtons = document.querySelectorAll('.player-move');
+    for (i = 0; i < playerButtons.length; i++) {
+        playerButtons[i].addEventListener('click', function () {
+            var clickValue = this.getAttribute("data-move");
+            playerMove(clickValue);
+        });
+    }
+    // przypisanie akcji do przycisku newgame
     newGame.addEventListener('click', function () {
         runNewGame();
     });
@@ -35,6 +33,8 @@ function startGame() {
         clearBox(output);
         roundResultDisplay(roundWinner);
         output.insertAdjacentHTML('beforeend', ' You chose ' + playerClicked + ' and computer chose ' + compMove + '<br><br>');
+        // tu wstawić funkcję dodającą wyniki dla danej rundy
+        // roundResultsCounter();
         pointCounter();
     }
 
@@ -59,17 +59,17 @@ function startGame() {
             (computerMove === 'ROCK' && playerClicked === 'SCISSORS') ||
             (computerMove === 'SCISSORS' && playerClicked === 'PAPER') ||
             (computerMove === 'PAPER' && playerClicked === 'ROCK')) {
-            roundWinner = '<b>COMPUTER WON:</b> ';
-            computerPoints += 1;
+            roundWinner = '<b>COMPUTER WON</b> ';
+            params.computerPoints += 1;
         }
         // remis
         else if (playerClicked === computerMove) {
-            roundWinner = 'It is a tie. <b>NO ONE WINS:</b>';
+            roundWinner = 'It is a tie. <b>NO ONE WINS</b>';
         }
         // wygrana gracza
         else {
-            roundWinner = '<b>YOU WON:</b>';
-            playerPoints += 1;
+            roundWinner = '<b>YOU WON</b>';
+            params.playerPoints += 1;
         }
         return roundWinner;
     }
@@ -84,53 +84,55 @@ function startGame() {
         elementID.innerHTML = "";
     }
 
-
     function pointCounter() {
         clearBox(results);
         var leftToWin = 0;
-        results.innerHTML= 'PLAYER POINTS:  ' + playerPoints + ' ----- ' + ' COMPUTER POINTS: ' + computerPoints;
-        if (computerPoints === numberOfRounds){
+        results.innerHTML = 'PLAYER POINTS:  ' + params.playerPoints + ' ----- ' + ' COMPUTER POINTS: ' + params.computerPoints;
+        if (params.computerPoints === params.numberOfRounds) {
             displayGameWinner('COMPUTER WINS THE GAME !');
         }
-        else if (playerPoints === numberOfRounds) {
+        else if (params.playerPoints === params.numberOfRounds) {
             displayGameWinner('YOU WIN THE GAME !');
         }
         else {
-            leftToWin = numberOfRounds - playerPoints;
-            results.insertAdjacentHTML('beforeend','<br><br>'+ 'You need to win ' + leftToWin + ' rounds more.');
+            leftToWin = params.numberOfRounds - params.playerPoints;
+            results.insertAdjacentHTML('beforeend', '<br><br>' + 'You need to win ' + leftToWin + ' rounds more.');
         }
     }
-    
-    
+
+    function roundResultsCounter() {
+
+    } 
+
     function runNewGame() {
-        
+
         disableButtons(false);
-        
-        computerPoints = 0;
-        playerPoints = 0;
+
+        params.computerPoints = 0;
+        params.playerPoints = 0;
         clearBox(output);
         clearBox(results);
-        numberOfRounds = window.prompt('How many rounds to win the game ? Please enter a number');
-        numberOfRounds = parseInt(numberOfRounds);
-        if (isNaN(numberOfRounds)) {
+        params.numberOfRounds = window.prompt('How many rounds to win the game ? Please enter a number');
+        params.numberOfRounds = parseInt(params.numberOfRounds);
+        if (isNaN(params.numberOfRounds)) {
             results.innerHTML = '<br>This is not a number. Please type in a number.' + '<br><br>' + output.innerHTML;
             disableButtons(true);
             setTimeout(infoPressNewGame, 2000)
         }
-        else if (numberOfRounds<1) {
+        else if (params.numberOfRounds < 1) {
             results.innerHTML = '<br>Please enter at least 1.';
             disableButtons(true);
             setTimeout(infoPressNewGame, 2000)
         }
-        else if (numberOfRounds>20) {
-            results.innerHTML = '<br>Are you serious you want to play ' + numberOfRounds + ' rounds ?';
-            results.insertAdjacentHTML('beforeend','<br>'+ 'Please enter a smaller number');
+        else if (params.numberOfRounds > 20) {
+            results.innerHTML = '<br>Are you serious you want to play ' + params.numberOfRounds + ' rounds ?';
+            results.insertAdjacentHTML('beforeend', '<br>' + 'Please enter a smaller number');
             disableButtons(true);
             setTimeout(infoPressNewGame, 3000)
         }
         else {
-            computerPoints = 0;
-            playerPoints = 0;
+            params.computerPoints = 0;
+            params.playerPoints = 0;
             pointCounter();
         }
     }
@@ -140,14 +142,14 @@ function startGame() {
         }
     }
 
-    function infoPressNewGame (){
+    function infoPressNewGame() {
         clearBox(output);
         clearBox(results);
-        results.insertAdjacentHTML('beforeend','<br>'+ '<b><span style="color:#FF0000">PRESS "NEW GAME" BUTTON');
+        results.insertAdjacentHTML('beforeend', '<br>' + '<b><span style="color:#FF0000">PRESS "NEW GAME" BUTTON');
     }
 
-    function displayGameWinner (gamewinner) {
-        results.insertAdjacentHTML('beforeend','<br><br>'+ '<span style="color:#FF0000">'+ gamewinner);
+    function displayGameWinner(gamewinner) {
+        results.insertAdjacentHTML('beforeend', '<br><br>' + '<span style="color:#FF0000">' + gamewinner);
         disableButtons(true);
         setTimeout(infoPressNewGame, 2000);
     }
