@@ -4,9 +4,11 @@ startGame();
 function startGame() {
     var newGame = document.getElementById('newGame');
     var params = {
+        roundNumber: 0,
         numberOfRounds: 0,
         playerPoints: 0,
         computerPoints: 0,
+        progress: [],
     };
 
     disableButtons(true);
@@ -28,13 +30,14 @@ function startGame() {
 
     // funkcja playerMove 
     function playerMove(playerClicked) {
+        params.roundNumber += 1;
         var compMove = computerMove();
         var roundWinner = compare(playerClicked, compMove);
         clearBox(output);
         roundResultDisplay(roundWinner);
         output.insertAdjacentHTML('beforeend', ' You chose ' + playerClicked + ' and computer chose ' + compMove + '<br><br>');
-        // tu wstawić funkcję dodającą wyniki dla danej rundy
-        // roundResultsCounter();
+        // wywołanie funkcji, ktora dodaje do tablicy wyniki dla danej rundy
+        roundResultsCounter();
         pointCounter();
     }
 
@@ -81,7 +84,7 @@ function startGame() {
 
     // function: clears a div
     function clearBox(elementID) {
-        elementID.innerHTML = "";
+        elementID.innerHTML = '';
     }
 
     function pointCounter() {
@@ -101,17 +104,18 @@ function startGame() {
     }
 
     function roundResultsCounter() {
-
+        params.progress.push(params.roundNumber);
     } 
 
     function runNewGame() {
-
         disableButtons(false);
-
+        params.roundNumber = 0;
+        params.numberOfRounds = 0;
         params.computerPoints = 0;
         params.playerPoints = 0;
         clearBox(output);
         clearBox(results);
+        clearBox(resultsModal); 
         params.numberOfRounds = window.prompt('How many rounds to win the game ? Please enter a number');
         params.numberOfRounds = parseInt(params.numberOfRounds);
         if (isNaN(params.numberOfRounds)) {
@@ -149,9 +153,34 @@ function startGame() {
     }
 
     function displayGameWinner(gamewinner) {
-        results.insertAdjacentHTML('beforeend', '<br><br>' + '<span style="color:#FF0000">' + gamewinner);
         disableButtons(true);
-        setTimeout(infoPressNewGame, 2000);
+        // wyświetlenie modala
+        document.querySelector("#modal-overlay").classList.add("show");
+        document.querySelector(".modal").classList.add("show");
+        clearBox(resultsModal); 
+        
+        // wyświetlenie wyniku gry
+        resultsModal.innerHTML="";
+        resultsModal.insertAdjacentHTML('beforebegin', '<br><br>' + '<span style="color:#FF0000">' + gamewinner);
+
+        //wyświetlenie tabeli z wynikami rund
+        resultsModal.insertAdjacentHTML('beforeend', '<br>' + '<span style="color:#000000">' + params.roundNumber);
+        
+
+        
+        //funkcja - zamykanie modala
+        var hideModal = function (event) {
+            event.preventDefault();
+            document.querySelector('#modal-overlay').classList.remove('show');
+        };
+        // sprawdzenie czy został kliknięty przycisk "x"
+        var closeButton = document.querySelector('.modal .close');
+        closeButton.addEventListener('click', hideModal);
+        // sprawdzenie czy zostało kliknięte tło 
+        document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+    
+
+        // setTimeout(infoPressNewGame, 2000);
     }
 
 } // koniec funkcji startGame 
