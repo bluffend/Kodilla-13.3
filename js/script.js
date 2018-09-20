@@ -1,8 +1,14 @@
+'use strict'
+
 startGame();
 
 // funkcja obsługująca całą grę
 function startGame() {
     var newGame = document.getElementById('newGame');
+    var output = document.getElementById('output');
+    var results = document.getElementById('results');
+    var headerModal = document.getElementById('headerModal');
+    var resultsModal = document.getElementById('resultsModal');
     var params = {
         roundNumber: 0,
         numberOfRounds: 0,
@@ -10,13 +16,20 @@ function startGame() {
         computerPoints: 0,
         progress: [],
     };
+    var currentRoundFullResults = [
+        0, // numer aktualnej rundy
+        "", // wybór gracza
+        "", // wybór (wylosowany) komputera
+        "", // zwycięzca aktualnej rundy
+        [], // wynik gry po aktualnej rundzie
+    ];
 
     disableButtons(true);
     infoPressNewGame();
 
     // przypisanie akcji do przycisków - paper rock scissors
     var playerButtons = document.querySelectorAll('.player-move');
-    for (i = 0; i < playerButtons.length; i++) {
+    for (var i = 0; i < playerButtons.length; i++) {
         playerButtons[i].addEventListener('click', function () {
             var clickValue = this.getAttribute("data-move");
             playerMove(clickValue);
@@ -27,7 +40,6 @@ function startGame() {
         runNewGame();
     });
 
-
     // funkcja playerMove 
     function playerMove(playerClicked) {
         params.roundNumber += 1;
@@ -37,7 +49,7 @@ function startGame() {
         roundResultDisplay(roundWinner);
         output.insertAdjacentHTML('beforeend', ' You chose ' + playerClicked + ' and computer chose ' + compMove + '<br><br>');
         // wywołanie funkcji, ktora dodaje do tablicy wyniki dla danej rundy
-        roundResultsCounter();
+        roundResultsCounter(playerClicked, compMove, roundWinner);
         pointCounter();
     }
 
@@ -56,22 +68,22 @@ function startGame() {
 
     // porównanie wyboru gracza i komputera, dodanie punktów 
     function compare(playerClicked, computerMove) {
-
+        var roundWinner;
         //sytuacje kiedy wygrywa komputer
         if (
             (computerMove === 'ROCK' && playerClicked === 'SCISSORS') ||
             (computerMove === 'SCISSORS' && playerClicked === 'PAPER') ||
             (computerMove === 'PAPER' && playerClicked === 'ROCK')) {
-            roundWinner = '<b>COMPUTER WON</b> ';
+            roundWinner = 'COMPUTER WON';
             params.computerPoints += 1;
         }
         // remis
         else if (playerClicked === computerMove) {
-            roundWinner = 'It is a tie. <b>NO ONE WINS</b>';
+            roundWinner = 'It is a tie. NO ONE WINS';
         }
         // wygrana gracza
         else {
-            roundWinner = '<b>YOU WON</b>';
+            roundWinner = 'YOU WON';
             params.playerPoints += 1;
         }
         return roundWinner;
@@ -103,9 +115,18 @@ function startGame() {
         }
     }
 
-    function roundResultsCounter() {
-        params.progress.push(params.roundNumber);
-    } 
+    function roundResultsCounter(playerClicked, compMove, roundWinner) {
+        var currentResult = params.playerPoints + "-" + params.computerPoints;
+
+        currentRoundFullResults = [
+            params.roundNumber, // wynik aktualnej rundy
+            playerClicked,      // wybór gracza
+            compMove,           // wybór (wylosowany) komputera
+            roundWinner,        // zwycięzca aktualnej rundy
+            currentResult,      // wynik gry po aktualnej rundzie
+        ];
+        params.progress.push(currentRoundFullResults);
+    }
 
     function runNewGame() {
         disableButtons(false);
@@ -113,9 +134,16 @@ function startGame() {
         params.numberOfRounds = 0;
         params.computerPoints = 0;
         params.playerPoints = 0;
+        currentRoundFullResults = {
+            thisRoundNumber: 0,
+            playerChoice: "",
+            computerChoice: "",
+            whoWinsThisRound: "",
+            resultsAfterThisRound: [],
+        };
         clearBox(output);
         clearBox(results);
-        clearBox(resultsModal); 
+        clearBox(resultsModal);
         params.numberOfRounds = window.prompt('How many rounds to win the game ? Please enter a number');
         params.numberOfRounds = parseInt(params.numberOfRounds);
         if (isNaN(params.numberOfRounds)) {
@@ -141,7 +169,7 @@ function startGame() {
         }
     }
     function disableButtons(value) {
-        for (i = 0; i < 3; i++) {
+        for (var i = 0; i < 3; i++) {
             document.getElementsByClassName('player-buttons')[i].disabled = value;
         }
     }
@@ -157,17 +185,14 @@ function startGame() {
         // wyświetlenie modala
         document.querySelector("#modal-overlay").classList.add("show");
         document.querySelector(".modal").classList.add("show");
-        clearBox(resultsModal); 
-        
+        clearBox(resultsModal);
+
         // wyświetlenie wyniku gry
-        resultsModal.innerHTML="";
-        resultsModal.insertAdjacentHTML('beforebegin', '<br><br>' + '<span style="color:#FF0000">' + gamewinner);
+        headerModal.innerHTML = gamewinner;
 
         //wyświetlenie tabeli z wynikami rund
-        resultsModal.insertAdjacentHTML('beforeend', '<br>' + '<span style="color:#000000">' + params.roundNumber);
-        
+        generateTable();
 
-        
         //funkcja - zamykanie modala
         var hideModal = function (event) {
             event.preventDefault();
@@ -178,9 +203,71 @@ function startGame() {
         closeButton.addEventListener('click', hideModal);
         // sprawdzenie czy zostało kliknięte tło 
         document.querySelector('#modal-overlay').addEventListener('click', hideModal);
-    
+
 
         // setTimeout(infoPressNewGame, 2000);
+    }
+
+    function generateTable() {
+
+        // get the reference for the body - na podstawie dokumentacji z: developer.mozilla.org
+        var body = document.getElementById('resultsModal');
+
+        // creates a <table> element and a <tbody> element
+        var tbl = document.createElement("table");
+        var tblBody = document.createElement("tbody");
+
+        //creating row and cells with column names
+
+        // define var with names for results' table columns
+        var tableColumnNames = [
+            "Round no.",
+            "Player move",
+            "Computer move",
+            "Round's results",
+            "Game results",
+        ];
+
+        // create table row with column names
+        var row = document.createElement("tr");
+        for (var j = 0; j < 5; j++) {
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(tableColumnNames[j]);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+        // add the row to the end of the table body
+        tblBody.appendChild(row);
+
+        // creating cells with results
+        for (var i = 0; i < params.roundNumber; i++) {
+            // creates a table row
+            var row = document.createElement("tr");
+
+            for (var j = 0; j < 5; j++) {
+                // Create a <td> element and a text node, make the text
+                // node the contents of the <td>, and put the <td> at
+                // the end of the table row
+                var cell = document.createElement("td");
+                var cellText = document.createTextNode(params.progress[i][j]);
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+
+            // add the row to the end of the table body
+            tblBody.appendChild(row);
+        }
+
+        // put the <tbody> in the <table>
+        tbl.appendChild(tblBody);
+        // appends <table> into <body>
+        body.appendChild(tbl);
+        // sets the border attribute of tbl to 2;
+        tbl.setAttribute("border", "1");
+        tbl.setAttribute("border-collapse", "collapse");
+        tbl.setAttribute("width", "100%");
+        td.setAttribute("padding", "10px");
+
     }
 
 } // koniec funkcji startGame 
