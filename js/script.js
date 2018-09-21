@@ -134,6 +134,7 @@ function startGame() {
         params.numberOfRounds = 0;
         params.computerPoints = 0;
         params.playerPoints = 0;
+        params.progress = [];
         currentRoundFullResults = {
             thisRoundNumber: 0,
             playerChoice: "",
@@ -197,6 +198,7 @@ function startGame() {
         var hideModal = function (event) {
             event.preventDefault();
             document.querySelector('#modal-overlay').classList.remove('show');
+            infoPressNewGame();
         };
         // sprawdzenie czy został kliknięty przycisk "x"
         var closeButton = document.querySelector('.modal .close');
@@ -204,21 +206,24 @@ function startGame() {
         // sprawdzenie czy zostało kliknięte tło 
         document.querySelector('#modal-overlay').addEventListener('click', hideModal);
 
-
-        // setTimeout(infoPressNewGame, 2000);
+        //stop propagation
+        document.querySelector(".modal").addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
     }
 
+    // na podstawie dokumentacji z: developer.mozilla.org
     function generateTable() {
 
-        // get the reference for the body - na podstawie dokumentacji z: developer.mozilla.org
+        // get the reference for the body 
         var body = document.getElementById('resultsModal');
 
         // creates a <table> element and a <tbody> element
         var tbl = document.createElement("table");
+        var tblHead = document.createElement("thead");
         var tblBody = document.createElement("tbody");
 
         //creating row and cells with column names
-
         // define var with names for results' table columns
         var tableColumnNames = [
             "Round no.",
@@ -236,14 +241,13 @@ function startGame() {
             cell.appendChild(cellText);
             row.appendChild(cell);
         }
-        // add the row to the end of the table body
-        tblBody.appendChild(row);
+        // add the column names' row to the end of the table head
+        tblHead.appendChild(row);
 
         // creating cells with results
         for (var i = 0; i < params.roundNumber; i++) {
             // creates a table row
             var row = document.createElement("tr");
-
             for (var j = 0; j < 5; j++) {
                 // Create a <td> element and a text node, make the text
                 // node the contents of the <td>, and put the <td> at
@@ -253,21 +257,17 @@ function startGame() {
                 cell.appendChild(cellText);
                 row.appendChild(cell);
             }
-
             // add the row to the end of the table body
             tblBody.appendChild(row);
         }
-
-        // put the <tbody> in the <table>
+        // put the <tbody> and <thead> in the <table> 
+        tbl.appendChild(tblHead);
         tbl.appendChild(tblBody);
         // appends <table> into <body>
         body.appendChild(tbl);
-        // sets the border attribute of tbl to 2;
-        tbl.setAttribute("border", "1");
-        tbl.setAttribute("border-collapse", "collapse");
+        // set table attributes
+        tbl.setAttribute("border", "2");
         tbl.setAttribute("width", "100%");
-        td.setAttribute("padding", "10px");
-
     }
 
 } // koniec funkcji startGame 
