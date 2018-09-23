@@ -57,13 +57,13 @@ function startGame() {
     function computerMove() {
         var cMove = Math.floor(Math.random() * 3 + 1);
         if (cMove === 1) {
-            cMove = 'PAPER';
+            return 'PAPER';
         }
         else if (cMove === 2) {
-            cMove = 'ROCK';
+            return 'ROCK';
         }
-        else cMove = 'SCISSORS';
-        return cMove;
+        else 
+            return 'SCISSORS';
     }
 
     // porównanie wyboru gracza i komputera, dodanie punktów 
@@ -74,19 +74,19 @@ function startGame() {
             (computerMove === 'ROCK' && playerClicked === 'SCISSORS') ||
             (computerMove === 'SCISSORS' && playerClicked === 'PAPER') ||
             (computerMove === 'PAPER' && playerClicked === 'ROCK')) {
-            roundWinner = 'COMPUTER WON';
             params.computerPoints += 1;
+            return 'COMPUTER WON';
+            
         }
         // remis
         else if (playerClicked === computerMove) {
-            roundWinner = 'It is a tie. NO ONE WINS';
+            return 'It is a tie. NO ONE WINS';
         }
         // wygrana gracza
         else {
-            roundWinner = 'YOU WON';
             params.playerPoints += 1;
+            return 'YOU WON';
         }
-        return roundWinner;
     }
 
     // function: displays round's results         
@@ -170,8 +170,9 @@ function startGame() {
         }
     }
     function disableButtons(value) {
-        for (var i = 0; i < 3; i++) {
-            document.getElementsByClassName('player-buttons')[i].disabled = value;
+        var buttons = document.getElementsByClassName('player-buttons');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = value;
         }
     }
 
