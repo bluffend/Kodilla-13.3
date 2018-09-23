@@ -135,13 +135,13 @@ function startGame() {
         params.computerPoints = 0;
         params.playerPoints = 0;
         params.progress = [];
-        currentRoundFullResults = {
-            thisRoundNumber: 0,
-            playerChoice: "",
-            computerChoice: "",
-            whoWinsThisRound: "",
-            resultsAfterThisRound: [],
-        };
+        currentRoundFullResults = [
+            0, // numer aktualnej rundy
+            "", // wybór gracza
+            "", // wybór (wylosowany) komputera
+            "", // zwycięzca aktualnej rundy
+            [], // wynik gry po aktualnej rundzie
+        ];
         clearBox(output);
         clearBox(results);
         clearBox(resultsModal);
