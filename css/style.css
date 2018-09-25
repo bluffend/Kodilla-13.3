@@ -118,7 +118,8 @@ button {
 	padding: 0 30px;
   }
 .modal .content {
-	min-height: 30px;
+  min-height: 30px;
+  max-height: 500px;
     padding: 5px 30px;
     margin: 0 auto;
 }
@@ -128,7 +129,17 @@ button {
 table { 
     width: 100%; 
     border-collapse: collapse; 
+    table-layout:fixed;
+    margin:auto;
   }
+table tbody {
+  height:300px;
+	overflow:auto;
+	overflow-x:hidden;
+	display:block; 
+	width:100%;
+} 
+  
   /* Zebra striping */
   tr:nth-of-type(odd) { 
     background: #eee; 
@@ -137,12 +148,25 @@ table {
     color: rgb(23, 102, 204); 
     font-weight: bold; 
     font-size: 18px;
+    display:table;
+    width:100%;
+    width:calc(100% - 18px);
+	}
+  tr {
+    display:table;
+	  width:100%;
+	  table-layout:fixed;
   }
+  
   td, th { 
     padding: 6px; 
     border: 1px solid #ccc; 
     text-align: left; 
   }
+  td {
+    width: 20%;
+  }
+  
 
 @media 
 only screen and (max-width: 760px),

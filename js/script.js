@@ -266,9 +266,6 @@ function startGame() {
         tbl.appendChild(tblBody);
         // appends <table> into <body>
         body.appendChild(tbl);
-        // set table attributes
-        tbl.setAttribute("border", "2");
-        tbl.setAttribute("width", "100%");
     }
 
 } // koniec funkcji startGame 
