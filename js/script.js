@@ -16,13 +16,13 @@ function startGame() {
         computerPoints: 0,
         progress: [],
     };
-    var currentRoundFullResults = [
-        0, // numer aktualnej rundy
-        "", // wybór gracza
-        "", // wybór (wylosowany) komputera
-        "", // zwycięzca aktualnej rundy
-        [], // wynik gry po aktualnej rundzie
-    ];
+    var currentRoundFullResults = {
+        currentRoundNumber: 0, // numer aktualnej rundy
+        playerChoice: "", // wybór gracza
+        computerChoice: "", // wybór (wylosowany) komputera
+        currentRoundWinner: "", // zwycięzca aktualnej rundy
+        gameResultsAfterCurrentRound: "", // wynik gry po aktualnej rundzie
+    };
 
     disableButtons(true);
     infoPressNewGame();
@@ -118,13 +118,13 @@ function startGame() {
     function roundResultsCounter(playerClicked, compMove, roundWinner) {
         var currentResult = params.playerPoints + "-" + params.computerPoints;
 
-        currentRoundFullResults = [
-            params.roundNumber, // wynik aktualnej rundy
-            playerClicked,      // wybór gracza
-            compMove,           // wybór (wylosowany) komputera
-            roundWinner,        // zwycięzca aktualnej rundy
-            currentResult,      // wynik gry po aktualnej rundzie
-        ];
+        currentRoundFullResults = {
+            currentRoundNumber: params.roundNumber, // numer aktualnej rundy
+            playerChoice: playerClicked, // wybór gracza
+            computerChoice: compMove, // wybór (wylosowany) komputera
+            currentRoundWinner: roundWinner, // zwycięzca aktualnej rundy
+            gameResultsAfterCurrentRound: currentResult, // wynik gry po aktualnej rundzie
+        };
         params.progress.push(currentRoundFullResults);
     }
 
@@ -135,13 +135,13 @@ function startGame() {
         params.computerPoints = 0;
         params.playerPoints = 0;
         params.progress = [];
-        currentRoundFullResults = [
-            0, // numer aktualnej rundy
-            "", // wybór gracza
-            "", // wybór (wylosowany) komputera
-            "", // zwycięzca aktualnej rundy
-            [], // wynik gry po aktualnej rundzie
-        ];
+        currentRoundFullResults = {
+            currentRoundNumber: 0, // numer aktualnej rundy
+            playerChoice: "", // wybór gracza
+            computerChoice: "", // wybór (wylosowany) komputera
+            currentRoundWinner: "", // zwycięzca aktualnej rundy
+            gameResultsAfterCurrentRound: "", // wynik gry po aktualnej rundzie
+        };
         clearBox(output);
         clearBox(results);
         clearBox(resultsModal);
@@ -224,24 +224,21 @@ function startGame() {
         var tblHead = document.createElement("thead");
         var tblBody = document.createElement("tbody");
 
-        //creating row and cells with column names
-        // define var with names for results' table columns
-        var tableColumnNames = [
-            "Round no.",
-            "Player move",
-            "Computer move",
-            "Round's results",
-            "Game results",
-        ];
-
         // create table row with column names
         var row = document.createElement("tr");
-        for (var j = 0; j < 5; j++) {
+        createTableColumnName("Round no.");
+        createTableColumnName("Player move");
+        createTableColumnName("Computer move");
+        createTableColumnName("Round's results");
+        createTableColumnName("Game results");
+        
+        function createTableColumnName(name) {
             var cell = document.createElement("td");
-            var cellText = document.createTextNode(tableColumnNames[j]);
+            var cellText = document.createTextNode(name);
             cell.appendChild(cellText);
             row.appendChild(cell);
-        }
+        };
+
         // add the column names' row to the end of the table head
         tblHead.appendChild(row);
 
@@ -249,15 +246,19 @@ function startGame() {
         for (var i = 0; i < params.roundNumber; i++) {
             // creates a table row
             var row = document.createElement("tr");
-            for (var j = 0; j < 5; j++) {
-                // Create a <td> element and a text node, make the text
-                // node the contents of the <td>, and put the <td> at
-                // the end of the table row
+            createTableCell(params.progress[i].currentRoundNumber);
+            createTableCell(params.progress[i].playerChoice);
+            createTableCell(params.progress[i].computerChoice);
+            createTableCell(params.progress[i].currentRoundWinner);
+            createTableCell(params.progress[i].gameResultsAfterCurrentRound);
+
+            function createTableCell(input) {
                 var cell = document.createElement("td");
-                var cellText = document.createTextNode(params.progress[i][j]);
+                var cellText = document.createTextNode(input);
                 cell.appendChild(cellText);
                 row.appendChild(cell);
-            }
+            };
+            
             // add the row to the end of the table body
             tblBody.appendChild(row);
         }
