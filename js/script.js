@@ -145,8 +145,9 @@ function startGame() {
         clearBox(output);
         clearBox(results);
         clearBox(resultsModal);
-        params.numberOfRounds = window.prompt('How many rounds to win the game ? Please enter a number');
-        params.numberOfRounds = parseInt(params.numberOfRounds);
+        var getNumberOfRounds;
+        getNumberOfRounds = window.prompt('How many rounds to win the game ? Please enter a number');
+        params.numberOfRounds = parseInt(getNumberOfRounds);
         if (isNaN(params.numberOfRounds)) {
             results.innerHTML = '<br>This is not a number. Please type in a number.' + '<br><br>' + output.innerHTML;
             disableButtons(true);
