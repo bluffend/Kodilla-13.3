@@ -62,7 +62,7 @@ function startGame() {
         else if (cMove === 2) {
             return 'ROCK';
         }
-        else 
+        else
             return 'SCISSORS';
     }
 
@@ -76,7 +76,7 @@ function startGame() {
             (computerMove === 'PAPER' && playerClicked === 'ROCK')) {
             params.computerPoints += 1;
             return 'COMPUTER WON';
-            
+
         }
         // remis
         else if (playerClicked === computerMove) {
@@ -227,39 +227,41 @@ function startGame() {
 
         // create table row with column names
         var row = document.createElement("tr");
-        createTableColumnName("Round no.");
-        createTableColumnName("Player move");
-        createTableColumnName("Computer move");
-        createTableColumnName("Round's results");
-        createTableColumnName("Game results");
-        
-        function createTableColumnName(name) {
-            var cell = document.createElement("td");
-            var cellText = document.createTextNode(name);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-        };
+        createTableCell("Round no.", row);
+        createTableCell("Player move", row);
+        createTableCell("Computer move", row);
+        createTableCell("Round's results", row);
+        createTableCell("Game results", row);
 
         // add the column names' row to the end of the table head
         tblHead.appendChild(row);
 
+        /*
+        if (params.roundNumber > 4) {
+            tblHead.border= "5px";
+            tblHead.width = "calc(100% - 18px)";
+        };
+        */
+
+
         // creating cells with results
+
+        function createTableCell(input, newRow) {
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(input);
+            cell.appendChild(cellText);
+            newRow.appendChild(cell);
+        };
+
         for (var i = 0; i < params.roundNumber; i++) {
             // creates a table row
             var row = document.createElement("tr");
-            createTableCell(params.progress[i].currentRoundNumber);
-            createTableCell(params.progress[i].playerChoice);
-            createTableCell(params.progress[i].computerChoice);
-            createTableCell(params.progress[i].currentRoundWinner);
-            createTableCell(params.progress[i].gameResultsAfterCurrentRound);
+            createTableCell(params.progress[i].currentRoundNumber, row);
+            createTableCell(params.progress[i].playerChoice, row);
+            createTableCell(params.progress[i].computerChoice, row);
+            createTableCell(params.progress[i].currentRoundWinner, row);
+            createTableCell(params.progress[i].gameResultsAfterCurrentRound, row);
 
-            function createTableCell(input) {
-                var cell = document.createElement("td");
-                var cellText = document.createTextNode(input);
-                cell.appendChild(cellText);
-                row.appendChild(cell);
-            };
-            
             // add the row to the end of the table body
             tblBody.appendChild(row);
         }

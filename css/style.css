@@ -150,12 +150,16 @@ table tbody {
     font-size: 18px;
     display:table;
     width:100%;
-    width:calc(100% - 18px);
-	}
+  }
+  
+  tr:nth-child(n+6) {
+    width: calc(100% - 18px);
+    }
+
   tr {
     display:table;
 	  width:100%;
-	  table-layout:fixed;
+	  table-layout:auto;
   }
   
   td, th { 
