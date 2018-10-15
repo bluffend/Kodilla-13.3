@@ -11,7 +11,7 @@ body {
     margin: 0 auto;
     margin-top: 40px;
     margin-bottom: 40px;
-    background-color: lightblue;
+    background-color: rgb(104, 132, 141);
     padding: 20px;
     border-radius: 20px;
 }
@@ -40,21 +40,20 @@ button {
 .output-div {
     margin: 0 auto;
     width: 100%;
-    display: inline-block;
+    display: block;
     max-width: 600px;
     max-height: 70px;
 }
   
 .results-box {
-    display: inline-block;
+    display: block;
+    margin: 0 auto; 
     size: 100%;
     max-width: 450px;
     max-height:460px;
-    vertical-align: middle; 
     text-align: middle;
     border: none;
     padding: 10px 10px 20px 10px;
-    margin: 0px 20px;  
     font-size: 16px;
     font-weight: bold;
     color: #000;
@@ -80,7 +79,8 @@ button {
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: rgba(0, 0, 0, 0.7);
+    max-width: 100%;
+    background: rgba(0, 0, 0, 0.7);
   }
   .overlay.show {
 	display: block;
@@ -89,7 +89,8 @@ button {
   .modal {
 	display: none;
 	background: #fff;
-	width: 200px;
+    width: 600px;
+    max-width: 90%;
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -107,14 +108,113 @@ button {
 	color: #000;
 	text-decoration: none;
   }
-  .modal header {
-	font-size: 20px;
+  .modal .headerModal {
+    vertical-align: middle;
+    font-size: 20px;
 	line-height: 30px;
 	min-height: 30px;
-	font-weight: bold;
+    font-weight: bold;
+    color: red;
 	padding: 0 30px;
   }
-  .modal .content {
-	min-height: 30px;
-	padding: 5px 30px;
+.modal .content {
+  min-height: 30px;
+  max-height: 500px;
+    padding: 5px 30px;
+    margin: 0 auto;
+}
+
+/* CSS for table */
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    table-layout:fixed;
+    margin:auto;
   }
+
+  table .content {
+    overflow-y: auto;
+  }
+
+  table tbody {
+  height:300px;
+	overflow:auto;
+	overflow-x:hidden;
+	display:block; 
+	width:100%;
+} 
+  
+  /* Zebra striping */
+  tr:nth-of-type(odd) { 
+    background: #eee; 
+  }
+  thead { 
+    color: rgb(23, 102, 204); 
+    font-weight: bold; 
+    font-size: 18px;
+    display:table;
+    width:100%;
+  }
+  
+  tr {
+    display:table;
+	  width:100%;
+	  table-layout:auto;
+  }
+  
+  td, th { 
+    padding: 6px; 
+    border: 1px solid #ccc; 
+    text-align: left; 
+  }
+  td {
+    width: 20%;
+  }
+  
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+		/*
+	Label the data
+	*/
+	td:nth-of-type(1):before { content: "Round no."; }
+	td:nth-of-type(2):before { content: "Player move"; }
+	td:nth-of-type(3):before { content: "Computer move"; }
+	td:nth-of-type(4):before { content: "Round's results"; }
+	td:nth-of-type(5):before { content: "Game Results"; }	
+}

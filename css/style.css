@@ -1,219 +1,232 @@
 body {
-    box-sizing: border-box;
-    margin: 0 auto;
-    text-align: center;
-    font-family: 'Quicksand', sans-serif;
-  }
+  box-sizing: border-box;
+  margin: 0 auto;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+}
 
-  .container {
-    width: 50%;
-    max-width: 1200px;
-    margin: 0 auto;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    background-color: lightblue;
-    padding: 20px;
-    border-radius: 20px;
+.container {
+  width: 50%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #68848d;
+  padding: 20px;
+  border-radius: 20px;
 }
 
 button {
-    display: inline-block;
-    vertical-align: middle;
-    width: 150px;
-    height: 50px;
-    border: none;
-    padding: 10px;
-    margin: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    border-radius: 20px;
-    outline: none;
-    background-color: rgb(37, 223, 61);
-    transition: 0.5s;
+  display: inline-block;
+  vertical-align: middle;
+  width: 150px;
+  height: 50px;
+  border: none;
+  padding: 10px;
+  margin: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  border-radius: 20px;
+  outline: none;
+  background-color: #25df3d;
+  transition: 0.5s;
 }
- .player-buttons:hover {
-    transform:scale(1.1);
-    background-color: rgb(78, 101, 230);
+
+.player-buttons:hover {
+  transform: scale(1.1);
+  background-color: #4e65e6;
 }
-  
+
 .output-div {
-    margin: 0 auto;
-    width: 100%;
-    display: block;
-    max-width: 600px;
-    max-height: 70px;
+  margin: 0 auto;
+  width: 100%;
+  display: block;
+  max-width: 600px;
+  max-height: 70px;
 }
-  
+
 .results-box {
-    display: block;
-    margin: 0 auto; 
-    size: 100%;
-    max-width: 450px;
-    max-height:460px;
-    text-align: middle;
-    border: none;
-    padding: 10px 10px 20px 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-    border-radius: 20px;
-    outline: none;
-    background-color: lightgrey;
+  display: block;
+  margin: 0 auto;
+  size: 100%;
+  max-width: 450px;
+  max-height: 460px;
+  text-align: middle;
+  border: none;
+  padding: 10px 10px 20px 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  border-radius: 20px;
+  outline: none;
+  background-color: lightgrey;
 }
 
 .new-game-button {
-    background-color: rgb(185, 20, 177);
-    color: white;
+  background-color: #b914b1;
+  color: white;
 }
+
 .new-game-button:hover {
-  transform:scale(1.2);
-  background-color: rgb(250, 35, 27);
+  transform: scale(1.2);
+  background-color: #fa231b;
 }
 
 /* CSS for modal */
 .overlay {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-    max-width: 100%;
-    background: rgba(0, 0, 0, 0.7);
-  }
-  .overlay.show {
-	display: block;
-  }
-  
-  .modal {
-	display: none;
-	background: #fff;
-    width: 600px;
-    max-width: 90%;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate3d(-50%, -50%, 0);
-			transform: translate3d(-50%, -50%, 0);
-  }
-  .modal.show {
-	display: block;
-  }
-  .modal .close {
-	position: absolute;
-	right: 0;
-	top: 0;
-	padding: 5px;
-	color: #000;
-	text-decoration: none;
-  }
-  .modal .headerModal {
-    vertical-align: middle;
-    font-size: 20px;
-	line-height: 30px;
-	min-height: 30px;
-    font-weight: bold;
-    color: red;
-	padding: 0 30px;
-  }
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.overlay.show {
+  display: block;
+}
+
+.modal {
+  display: none;
+  background: #fff;
+  width: 600px;
+  max-width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.modal.show {
+  display: block;
+}
+
+.modal .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 5px;
+  color: #000;
+  text-decoration: none;
+}
+
+.modal .headerModal {
+  vertical-align: middle;
+  font-size: 20px;
+  line-height: 30px;
+  min-height: 30px;
+  font-weight: bold;
+  color: red;
+  padding: 0 30px;
+}
+
 .modal .content {
   min-height: 30px;
   max-height: 500px;
-    padding: 5px 30px;
-    margin: 0 auto;
+  padding: 5px 30px;
+  margin: 0 auto;
 }
 
 /* CSS for table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin: auto;
+}
 
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    table-layout:fixed;
-    margin:auto;
-  }
+table .content {
+  overflow-y: auto;
+}
+
 table tbody {
-  height:300px;
-	overflow:auto;
-	overflow-x:hidden;
-	display:block; 
-	width:100%;
-} 
-  
-  /* Zebra striping */
-  tr:nth-of-type(odd) { 
-    background: #eee; 
-  }
-  thead { 
-    color: rgb(23, 102, 204); 
-    font-weight: bold; 
-    font-size: 18px;
-    display:table;
-    width:100%;
-  }
-  
-  tr:nth-child(n+6) {
-    width: calc(100% - 18px);
-    }
+  height: 300px;
+  overflow: auto;
+  overflow-x: hidden;
+  display: block;
+  width: 100%;
+}
 
-  tr {
-    display:table;
-	  width:100%;
-	  table-layout:auto;
+/* Zebra striping */
+tr:nth-of-type(odd) {
+  background: #eee;
+}
+
+thead {
+  color: #1766cc;
+  font-weight: bold;
+  font-size: 18px;
+  display: table;
+  width: 100%;
+}
+
+tr {
+  display: table;
+  width: 100%;
+  table-layout: auto;
+}
+
+td, th {
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+td {
+  width: 20%;
+}
+
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, th, td, tr {
+    display: block;
   }
-  
-  td, th { 
-    padding: 6px; 
-    border: 1px solid #ccc; 
-    text-align: left; 
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  tr {
+    border: 1px solid #ccc;
   }
   td {
-    width: 20%;
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
   }
-  
-
-@media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-		/*
+  td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+  /*
 	Label the data
 	*/
-	td:nth-of-type(1):before { content: "Round no."; }
-	td:nth-of-type(2):before { content: "Player move"; }
-	td:nth-of-type(3):before { content: "Computer move"; }
-	td:nth-of-type(4):before { content: "Round's results"; }
-	td:nth-of-type(5):before { content: "Game Results"; }	
+  td:nth-of-type(1):before {
+    content: "Round no.";
+  }
+  td:nth-of-type(2):before {
+    content: "Player move";
+  }
+  td:nth-of-type(3):before {
+    content: "Computer move";
+  }
+  td:nth-of-type(4):before {
+    content: "Round's results";
+  }
+  td:nth-of-type(5):before {
+    content: "Game Results";
+  }
 }
+/*# sourceMappingURL=style.css.map */

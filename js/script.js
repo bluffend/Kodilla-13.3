@@ -224,6 +224,7 @@ function startGame() {
         var tbl = document.createElement("table");
         var tblHead = document.createElement("thead");
         var tblBody = document.createElement("tbody");
+        tblBody.setAttribute("id", "tBody");
 
         // create table row with column names
         var row = document.createElement("tr");
@@ -236,14 +237,7 @@ function startGame() {
         // add the column names' row to the end of the table head
         tblHead.appendChild(row);
 
-        /*
-        if (params.roundNumber > 4) {
-            tblHead.border= "5px";
-            tblHead.width = "calc(100% - 18px)";
-        };
-        */
-
-
+        
         // creating cells with results
 
         function createTableCell(input, newRow) {
@@ -270,6 +264,11 @@ function startGame() {
         tbl.appendChild(tblBody);
         // appends <table> into <body>
         body.appendChild(tbl);
+
+
+        if (params.roundNumber > 5) {
+            document.getElementById("tBody").style.width = "555px";
+        };
     }
 
 } // koniec funkcji startGame 
